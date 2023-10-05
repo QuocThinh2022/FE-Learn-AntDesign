@@ -1,0 +1,129 @@
+{
+  "utilsRoom": [
+    {
+      "label": "Wifi mien phi",
+      "value": "Wifi mien phi"
+    },
+    {
+      "label": "Dich vu phong",
+      "value": "Dich vu phong"
+    },
+    {
+      "label": "Phong gia dinh",
+      "value": "Phong gia dinh"
+    },
+    {
+      "label": "Quay bar",
+      "value": "Quay bar"
+    },
+    {
+      "label": "Xe dua don du lich",
+      "value": "Xe dua don du lich"
+    },
+    {
+      "label": "Luot song",
+      "value": "Luot song"
+    }
+  ],
+  "rooms": [
+    {
+      "tenphong": "Phong 01",
+      "quantityPeople": 2,
+      "quantityBed": 1,
+      "description": "Phong cap doi",
+      "status": true,
+      "ultis": [
+        "Dich vu phong",
+        "Wifi mien phi",
+        "Phong gia dinh",
+        "Xe dua don du lich"
+      ],
+      "id": 1
+    },
+    {
+      "tenphong": "Phong 02",
+      "quantityPeople": 3,
+      "quantityBed": 1,
+      "ultis": [
+        "Phong gia dinh",
+        "Wifi mien phi",
+        "Dich vu phong"
+      ],
+      "id": 2
+    },
+    {
+      "tenphong": "Phong 03",
+      "quantityPeople": 1,
+      "quantityBed": 1,
+      "ultis": [
+        "Wifi mien phi"
+      ],
+      "id": 3
+    },
+    {
+      "tenphong": "Phong 04",
+      "quantityPeople": 1,
+      "quantityBed": 2,
+      "status": true,
+      "ultis": [
+        "Xe dua don du lich",
+        "Quay bar",
+        "Luot song",
+        "Wifi mien phi"
+      ],
+      "id": 4
+    },
+    {
+      "tenphong": "Phong 05",
+      "quantityPeople": 1,
+      "quantityBed": 1,
+      "ultis": [
+        "Wifi mien phi",
+        "Dich vu phong"
+      ],
+      "id": 5
+    },
+    {
+      "tenphong": "Phong 06",
+      "quantityPeople": 4,
+      "quantityBed": 2,
+      "ultis": [
+        "Wifi mien phi",
+        "Dich vu phong",
+        "Phong gia dinh",
+        "Xe dua don du lich",
+        "Quay bar",
+        "Luot song"
+      ],
+      "status": true,
+      "vip": true,
+      "id": 6
+    },
+    {
+      "tenphong": "Phong 07",
+      "quantityPeople": 2,
+      "quantityBed": 1,
+      "ultis": [
+        "Dich vu phong",
+        "Wifi mien phi",
+        "Xe dua don du lich",
+        "Luot song",
+        "Quay bar"
+      ],
+      "description": "Phong tinh nhan",
+      "status": true,
+      "vip": true,
+      "id": 7
+    },
+    {
+      "tenphong": "Phong 08",
+      "quantityPeople": 1,
+      "quantityBed": 1,
+      "ultis": [
+        "Wifi mien phi"
+      ],
+      "vip": true,
+      "id": 8
+    }
+  ]
+}
