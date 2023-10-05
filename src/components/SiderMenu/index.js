@@ -1,5 +1,5 @@
 import { Menu } from "antd";
-import { AppstoreOutlined, DashboardOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, DashboardOutlined, ShoppingCartOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { Link, useLocation } from "react-router-dom";
 
 function SiderMenu() {
@@ -19,10 +19,6 @@ function SiderMenu() {
                     label: <Link to='/crm'>CRM</Link>
                 },
                 {
-                    key: '/booking-room',
-                    label: <Link to='/booking-room'>BookingRoom</Link>
-                },
-                {
                     key: '/ecommerce',
                     label: <Link to='/ecommerce'>E-commerce</Link>
                 },
@@ -31,6 +27,11 @@ function SiderMenu() {
                     label: 'Projects'
                 }
             ]
+        },
+        {
+            key: '/booking-room',
+            label: <Link to='/booking-room'>BookingRoom</Link>,
+            icon: <ShoppingCartOutlined />
         },
         {
             key: '/room-manager',
