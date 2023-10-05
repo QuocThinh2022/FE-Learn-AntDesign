@@ -37,8 +37,7 @@ function SiderMenu() {
             key: '/room-manager',
             label: <Link to='/room-manager'>Room Manager</Link>,
             icon: <UnorderedListOutlined />
-        }
-        ,
+        },
         {
             key: '/apps',
             label: 'Apps',

@@ -22,7 +22,7 @@ function RoomList() {
                     <Row gutter={[20,20]}>
                         {listRooms.map(item => (
                             <Col xxl={6} xl={6} lg={6} md={8} sm={12} xs={24}  key={item.id}>
-                                <Badge.Ribbon text={item.vip ? 'VIP':'Normal'}  color={item.vip ? 'purple':'silver'}>
+                                <Badge.Ribbon text={item.vip ? 'VIP':'Normal'}  color={item.vip ? 'purple':'gray'}>
                                     <Card>
                                         <div>{item.tenphong}</div>
                                         <div>So nguoi: {item.quantityPeople}</div>

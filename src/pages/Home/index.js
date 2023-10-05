@@ -1,11 +1,54 @@
-import { Col, Row } from 'antd';
+import { Carousel, Col, Collapse, Image, Row } from 'antd';
 import Statistic from '../../components/Statistic';
 import { DollarOutlined, LineChartOutlined, ProfileOutlined, UserOutlined } from '@ant-design/icons';
 import CardItem from '../../components/CardItem';
 
+import { useEffect, useState } from 'react';
+import { getQuestions } from '../../services/questionsService';
+
+const { Panel } = Collapse;
+
 function Home() {
+    
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchApi = async () => {
+            const res = await getQuestions();
+            setData(res);
+        }
+        fetchApi();
+    }, [])
+
+
     return (
         <>
+            <Carousel autoplay  className="mb-20">
+                <div className='carousel__item'>
+                    <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlP7Oq-JiWisJQ8c4wJZyIq3gCqimg5AA1NO2H9xL3aXerTX16pvlGorZfj7Kr1NDwCsQ&usqp=CAU' />
+                </div>
+                <div className='carousel__item' >
+                    <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU0Px8GC4cHI7FraHN-gXZiBJ9GZn_nhvmuPCSF3TRulBTQGMOuWq9KyNLwDrAYoazD1w&usqp=CAU' />
+                </div>
+                <div className='carousel__item' >
+                    <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDtpvJW4gwmPOE_Qe3teMhsDvzgNVREzLa510B-Cv1uR9rm96ASp7isKltGYxQ-INANYE&usqp=CAU' />
+                </div>
+            </Carousel>
+
+            <div>
+                <Image src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlP7Oq-JiWisJQ8c4wJZyIq3gCqimg5AA1NO2H9xL3aXerTX16pvlGorZfj7Kr1NDwCsQ&usqp=CAU' />
+                <Image src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU0Px8GC4cHI7FraHN-gXZiBJ9GZn_nhvmuPCSF3TRulBTQGMOuWq9KyNLwDrAYoazD1w&usqp=CAU' />
+                <Image src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDtpvJW4gwmPOE_Qe3teMhsDvzgNVREzLa510B-Cv1uR9rm96ASp7isKltGYxQ-INANYE&usqp=CAU' />
+            </div>
+
+            <Collapse accordion expandIconPosition='end' defaultActiveKey='1'  className="mb-20">
+                {data.length > 0 && data.map(item => (
+                    <Panel header={item.question} key={item.id}>
+                        <p>{item.answers[item.correctAnswer]}</p>
+                    </Panel>
+                ))}
+            </Collapse>
+
             <Row gutter={[20,20]} className="mb-20"> 
                 <Col xxl={6} xl={6} lg={6} md={12} sm={24} xs={24}>
                     <CardItem>

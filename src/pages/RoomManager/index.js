@@ -1,9 +1,13 @@
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, TableOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import { Button, Card, Row } from "antd";
 import { Link } from "react-router-dom";
 import RoomList from "./RoomList";
+import RoomListTable from "./RoomListTable";
+import { useState } from "react";
 
 function RoomManager() {
+    const [listed, setListed] = useState(false);
+
     return (
         <>
             <Card  className='mb-20'>
@@ -12,7 +16,16 @@ function RoomManager() {
                     <Button icon={<PlusOutlined />}>Them moi</Button>
                 </Link>
             </Card>
-            <RoomList />
+            <div>
+                <Card className="mb-20">
+                    {listed ?
+                        <UnorderedListOutlined onClick={() => setListed(false)} />
+                        :
+                        <TableOutlined onClick={() => setListed(true)} />
+                    }
+                </Card>
+                {listed ? <RoomList /> : <RoomListTable />}
+            </div>
         </>
     )
 }
