@@ -1,17 +1,18 @@
-import { message, Badge, Button, Card, Col, Form, Input, InputNumber, Row, Select, Switch } from "antd";
+import { CloseOutlined, EditOutlined } from "@ant-design/icons";
+import { Badge, Button, Card, Col, Form, Input, InputNumber, Modal, Row, Select, Spin, Switch, Tooltip, message, notification } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useEffect, useState } from "react";
-import getUtilsRoom from "../../services/utilsRoomService";
-
-import {createRoom} from '../../services/utilsRoomService/roomService'
-import { CloseOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
+import getUtilsRoom from "../../services/utilsRoomService";
+import { updateRoom } from "../../services/utilsRoomService/roomService";
 
-
-function CreateRoom() {
-    const [messageApi, contextHolder] = message.useMessage();
+function EditRoom(props) {
+    const { record, onReload } = props;
+    const [isOpenModal, setIsOpenModal] = useState(false);
     const [form] = Form.useForm();
+    const [api, contextHolder] = notification.useNotification();
     const [options, setOptions] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const fetchApi = async () => {
@@ -23,35 +24,61 @@ function CreateRoom() {
         fetchApi();
     }, []);
 
+
+    function handleOpenModal() {
+        form.resetFields();
+        setIsOpenModal(true);
+    }
+
+    function handleCloseModal() {
+        setIsOpenModal(false);
+    }
+
+    function handleOk() {
+        handleCloseModal();
+    }
+
+    function handleCancel() {
+        handleCloseModal();
+    }
+
+    function handleEdit() {
+        handleOpenModal();
+    }
+    // console.log(record);
+
     const handleFinish = async (values) => {
-        const res = await createRoom(values);
+        setIsLoading(true);
+        const res = await updateRoom(record.id, values);
         if (res) {
+            onReload();
             form.resetFields();
-            messageApi.open({
-                type: 'success',
-                content: 'Tao phong moi thanh cong!'
-            });
+            api['success']({
+                message: 'Cap nhat thanh cong!',
+                description: `Cap nhat thanh cong phong: ${record.tenphong}`
+            })
         }
         else {
-            messageApi.open({
-                type: 'error',
-                content: 'Tao phong KHONG thanh cong!',
-                duration: 3
-            });
+            api['error']({
+                message: 'Cap nhat KHONG thanh cong',
+                description: `Cap nhat that bai phong: ${record.tenphong}`
+            })
         }
-        // console.log(res);
+        handleCloseModal();
+        setIsLoading(false);
     }
 
     return (
         <>
             {contextHolder}
-            <Badge.Ribbon color="#fff" text={<Link to='/room-manager' style={{ color: '#000'}}><CloseOutlined /></Link>}>
-                <Card >
-                    <h2>Create New Room</h2>
-                    <Form onFinish={handleFinish} initialValues={{
-                            quantityBed: 1,
-                            quantityPeople: 1,
-                        }}
+            <Tooltip title='Edit Room'>
+                <Button onClick={handleEdit} type='text' icon={<EditOutlined />}></Button>
+            </Tooltip>
+            <Modal title='Edit Room'open={isOpenModal} width={600} onOk={handleOk} onCancel={handleCancel}
+                footer={null} maskClosable={false}
+            >
+                <Spin tip='Loading...' spinning={isLoading}>
+                    <Form onFinish={handleFinish} initialValues={record}
                         layout='vertical'
                         form={form}
                     >
@@ -105,14 +132,14 @@ function CreateRoom() {
                         </Row>
                         
                         <Form.Item>
-                            <Button type='primary' htmlType='submit'>Tao moi</Button>
+                            <Button type='primary' htmlType='submit'>Update</Button>
                             <Button className='ml-10' onClick={() => form.resetFields()}>Reset</Button>
                         </Form.Item>
                     </Form>
-                </Card>
-            </Badge.Ribbon>
+                </Spin>
+            </Modal>
         </>
     )
 }
 
-export default CreateRoom;
+export default EditRoom;

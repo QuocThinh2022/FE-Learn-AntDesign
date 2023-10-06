@@ -6,6 +6,7 @@ import Ecommerce from "../pages/Ecommerce";
 import Home from "../pages/Home";
 import RoomManager from "../pages/RoomManager";
 import CreateRoom from "../pages/RoomManager/CreateRoom";
+import Setting from "../pages/Setting";
 
 export const routes = [
    {
@@ -17,7 +18,8 @@ export const routes = [
          { path: 'booking-room', element: <BookingRoom /> },
          { path: 'room-manager', element: <RoomManager /> },
          { path: 'create-room', element: <CreateRoom />},
-         { path: 'ecommerce', element: <Ecommerce /> }
+         { path: 'ecommerce', element: <Ecommerce /> },
+         {path: 'setting', element:<Setting />}
       ]
    }
 ]

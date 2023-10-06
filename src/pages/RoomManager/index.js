@@ -6,7 +6,7 @@ import RoomListTable from "./RoomListTable";
 import { useState } from "react";
 
 function RoomManager() {
-    const [listed, setListed] = useState(false);
+    const [listed, setListed] = useState(true);
 
     return (
         <>
@@ -19,9 +19,9 @@ function RoomManager() {
             <div>
                 <Card className="mb-20">
                     {listed ?
-                        <UnorderedListOutlined onClick={() => setListed(false)} />
+                        <TableOutlined onClick={() => setListed(false)} />
                         :
-                        <TableOutlined onClick={() => setListed(true)} />
+                        <UnorderedListOutlined onClick={() => setListed(true)} />
                     }
                 </Card>
                 {listed ? <RoomList /> : <RoomListTable />}

@@ -1,44 +1,110 @@
+import { Badge, Button, Popconfirm, Table, Tag, Tooltip, notification } from "antd";
 import { useEffect, useState } from "react";
-import { getListRoom } from "../../services/utilsRoomService/roomService";
-import { Badge, Card, Col, Row } from "antd";
-
+import { deleteRoom, getListRoom } from "../../services/utilsRoomService/roomService";
+import { DeleteFilled, DeleteOutlined, DollarOutlined, EditOutlined } from "@ant-design/icons";
+import EditRoom from "./EditRoom";
 
 function RoomList() {
-    const [listRooms, setListRooms] = useState([]);
+
+    const [rooms, setRooms] = useState([]);
+    const [api, contextHolder] = notification.useNotification();
+
+    const fetchApi = async () => {
+        const res = await getListRoom();
+        setRooms(res.reverse());
+    }
 
     useEffect(() => {
-        const fetchApi = async () => {
-            const res = await getListRoom();
-            if (res) {
-                setListRooms(res);
-            }
-        }
         fetchApi();
     }, [])
+
+    function handleReload() {
+        fetchApi();
+    }
+
+    async function handleDelete(record) {
+        const res = await deleteRoom(record.id);
+        if (res) {
+            handleReload();
+            api['success']({
+                message: 'Xoa phong thanh cong!',
+                description: `Da xoa phong: ${record.tenphong}`
+            })
+        } else {
+            api['error']({
+                message: 'Xoa phong that bai!',
+                desciption: `Vui long thu lai sau!`
+            })
+        }
+    }
+
+    const columns = [
+        {
+            title: 'Ten phong',
+            dataIndex: 'tenphong',
+            key: 'tenphong',
+        },
+        {
+            title: 'So phong',
+            dataIndex: 'quantityBed',
+            key: 'quantityBed',
+        },
+        {
+            title: 'So nguoi',
+            dataIndex: 'quantityPeople',
+            key: 'quantityPeople',
+        },
+        {
+            title: 'Loai phong',
+            dataIndex: 'vip',
+            key: 'vip',
+            render: (text, record, index) => (
+                <>
+                    {record.vip ? (
+                        <Tag color='#531dab' icon={<DollarOutlined />}>VIP</Tag>
+                    ):(
+                        <Tag color='gray'>thuong</Tag>
+                    )}
+                </>
+            )
+        },
+        {
+            title: 'Trang thai',
+            dataIndex: 'status',
+            key: 'status',
+            render: (text, record, index) => (
+                <>
+                    {record.status ? (
+                        <Badge text='Con Phong' color='green' />
+                    ): (
+                        <Badge text='Het phong' color='red' />
+                    )}
+                </>
+            )
+        },
+        {
+            title: 'Hanh dong',
+            key: 'actions',
+            render: (text, record, index) => (
+                <>
+                    <Tooltip title='Delete Room' placement='left'>
+                        <Popconfirm title='Sure to delete?' onConfirm={() => handleDelete(record)}>
+                            <Button danger type='text' icon={<DeleteFilled  />} ></Button>
+                        </Popconfirm>
+                    </Tooltip>
+                    
+                    <EditRoom record={record} onReload={handleReload} />
+                </>
+            )
+        }
+    ]
+
     return (
         <>
-            <>
-                {listRooms.length > 0 && (
-                    <Row gutter={[20,20]}>
-                        {listRooms.map(item => (
-                            <Col xxl={6} xl={6} lg={6} md={8} sm={12} xs={24}  key={item.id}>
-                                <Badge.Ribbon text={item.vip ? 'VIP':'Normal'}  color={item.vip ? 'purple':'gray'}>
-                                    <Card>
-                                        <div>{item.tenphong}</div>
-                                        <div>So nguoi: {item.quantityPeople}</div>
-                                        <div>So giuong: {item.quantityBed}</div>
-                                        <div>
-                                            {item.status ? <Badge color='green' text='Con phong' /> : <Badge color='red' text='Het phong' />}
-                                        </div>
-                                    </Card>
-                                </Badge.Ribbon>    
-                            </Col>
-                        ))}
-                    </Row>
-                )}
-            </>
+            {contextHolder}
+            <Table dataSource={rooms} columns={columns} rowKey='id' />
         </>
     )
-}
+} 
 
 export default RoomList;

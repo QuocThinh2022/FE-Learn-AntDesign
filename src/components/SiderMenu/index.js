@@ -1,5 +1,5 @@
 import { Menu } from "antd";
-import { AppstoreOutlined, DashboardOutlined, ShoppingCartOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, DashboardOutlined, SettingOutlined, ShoppingCartOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { Link, useLocation } from "react-router-dom";
 
 function SiderMenu() {
@@ -37,6 +37,11 @@ function SiderMenu() {
             key: '/room-manager',
             label: <Link to='/room-manager'>Room Manager</Link>,
             icon: <UnorderedListOutlined />
+        },
+        {
+            key: '/setting',
+            label: <Link to='/setting'>Setting</Link>,
+            icon: <SettingOutlined />
         },
         {
             key: '/apps',

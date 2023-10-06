@@ -1,4 +1,4 @@
-import { Carousel, Col, Collapse, Image, Row } from 'antd';
+import { Carousel, Col, Collapse, Image, QRCode, Rate, Row } from 'antd';
 import Statistic from '../../components/Statistic';
 import { DollarOutlined, LineChartOutlined, ProfileOutlined, UserOutlined } from '@ant-design/icons';
 import CardItem from '../../components/CardItem';
@@ -23,25 +23,37 @@ function Home() {
 
     return (
         <>
-            <Carousel autoplay  className="mb-20">
-                <div className='carousel__item'>
-                    <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlP7Oq-JiWisJQ8c4wJZyIq3gCqimg5AA1NO2H9xL3aXerTX16pvlGorZfj7Kr1NDwCsQ&usqp=CAU' />
-                </div>
-                <div className='carousel__item' >
-                    <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU0Px8GC4cHI7FraHN-gXZiBJ9GZn_nhvmuPCSF3TRulBTQGMOuWq9KyNLwDrAYoazD1w&usqp=CAU' />
-                </div>
-                <div className='carousel__item' >
-                    <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDtpvJW4gwmPOE_Qe3teMhsDvzgNVREzLa510B-Cv1uR9rm96ASp7isKltGYxQ-INANYE&usqp=CAU' />
-                </div>
-            </Carousel>
+            <h2>Rate</h2>
+            <Rate onChange={(value) => console.log(value)} allowHalf />
 
+            <h2>QR Code</h2>
+            <QRCode value='https://daca.vn/' />
+
+            <h2>Carousel</h2>
+            <Row gutter={[20,20]}>
+                <Col xxl={6} xl={6} lg={8} md={12} sm={24} xs={24} >
+                    <Carousel autoplay  className="mb-20">
+                        <div className='carousel__item'>
+                            <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlP7Oq-JiWisJQ8c4wJZyIq3gCqimg5AA1NO2H9xL3aXerTX16pvlGorZfj7Kr1NDwCsQ&usqp=CAU' />
+                        </div>
+                        <div className='carousel__item' >
+                            <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU0Px8GC4cHI7FraHN-gXZiBJ9GZn_nhvmuPCSF3TRulBTQGMOuWq9KyNLwDrAYoazD1w&usqp=CAU' />
+                        </div>
+                        <div className='carousel__item' >
+                            <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDtpvJW4gwmPOE_Qe3teMhsDvzgNVREzLa510B-Cv1uR9rm96ASp7isKltGYxQ-INANYE&usqp=CAU' />
+                        </div>
+                    </Carousel>
+                </Col>
+            </Row>
+
+            <h2>Image</h2>
             <div>
                 <Image src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlP7Oq-JiWisJQ8c4wJZyIq3gCqimg5AA1NO2H9xL3aXerTX16pvlGorZfj7Kr1NDwCsQ&usqp=CAU' />
                 <Image src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU0Px8GC4cHI7FraHN-gXZiBJ9GZn_nhvmuPCSF3TRulBTQGMOuWq9KyNLwDrAYoazD1w&usqp=CAU' />
                 <Image src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDtpvJW4gwmPOE_Qe3teMhsDvzgNVREzLa510B-Cv1uR9rm96ASp7isKltGYxQ-INANYE&usqp=CAU' />
             </div>
 
-            <Collapse accordion expandIconPosition='end' defaultActiveKey='1'  className="mb-20">
+            <Collapse accordion expandIconPosition='end' defaultActiveKey='1' className="mb-20">
                 {data.length > 0 && data.map(item => (
                     <Panel header={item.question} key={item.id}>
                         <p>{item.answers[item.correctAnswer]}</p>

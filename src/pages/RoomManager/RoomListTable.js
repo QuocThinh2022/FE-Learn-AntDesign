@@ -1,80 +1,44 @@
-import { Badge, Button, Table } from "antd";
 import { useEffect, useState } from "react";
 import { getListRoom } from "../../services/utilsRoomService/roomService";
-import { DeleteFilled, DeleteOutlined } from "@ant-design/icons";
+import { Badge, Card, Col, Row } from "antd";
+
 
 function RoomListTable() {
-
-    const [rooms, setRooms] = useState([]);
+    const [listRooms, setListRooms] = useState([]);
 
     useEffect(() => {
         const fetchApi = async () => {
             const res = await getListRoom();
-            setRooms(res);
+            if (res) {
+                setListRooms(res);
+            }
         }
         fetchApi();
     }, [])
-
-    const columns = [
-        {
-            title: 'Ten phong',
-            dataIndex: 'tenphong',
-            key: 'tenphong',
-        },
-        {
-            title: 'So phong',
-            dataIndex: 'quantityBed',
-            key: 'quantityBed',
-        },
-        {
-            title: 'So nguoi',
-            dataIndex: 'quantityPeople',
-            key: 'quantityPeople',
-        },
-        {
-            title: 'Loai phong',
-            dataIndex: 'vip',
-            key: 'vip',
-            render: (text, record, index) => (
-                <>
-                    {record.vip ? (
-                        <Badge text='VIP' color='purple' />
-                    ):(
-                        <Badge text='thuong' color='gray' />
-                    )}
-                </>
-            )
-        },
-        {
-            title: 'Trang thai',
-            dataIndex: 'status',
-            key: 'status',
-            render: (text, record, index) => (
-                <>
-                    {record.status ? (
-                        <Badge text='Con Phong' color='green' />
-                    ): (
-                        <Badge text='Het phong' color='red' />
-                    )}
-                </>
-            )
-        },
-        {
-            title: 'Hanh dong',
-            key: 'actions',
-            render: (text, record, index) => (
-                <>
-                    <Button danger type='text' icon={<DeleteFilled  />} ></Button>
-                </>
-            )
-        }
-    ]
-
     return (
         <>
-            <Table dataSource={rooms} columns={columns} rowKey='id' />
+            <>
+                {listRooms.length > 0 && (
+                    <Row gutter={[20,20]}>
+                        {listRooms.map(item => (
+                            <Col xxl={6} xl={6} lg={6} md={8} sm={12} xs={24}  key={item.id}>
+                                <Badge.Ribbon text={item.vip ? 'VIP':'Normal'}  color={item.vip ? 'purple':'gray'}>
+                                    <Card>
+                                        <div>{item.tenphong}</div>
+                                        <div>So nguoi: {item.quantityPeople}</div>
+                                        <div>So giuong: {item.quantityBed}</div>
+                                        <div>
+                                            {item.status ? <Badge color='green' text='Con phong' /> : <Badge color='red' text='Het phong' />}
+                                        </div>
+                                    </Card>
+                                </Badge.Ribbon>    
+                            </Col>
+                        ))}
+                    </Row>
+                )}
+            </>
         </>
     )
-} 
+}
 
 export default RoomListTable;
